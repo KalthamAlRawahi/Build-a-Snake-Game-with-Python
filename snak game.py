@@ -74,17 +74,23 @@ while True:
        food = None # remove food if snake ate it
        # while food id is removed, generate new food in a random place on screen
        while food is None:
-         new_food = [
-           random.randint(1, screen_height-1), # 200, 400
-           random.randint(1, screen_width-1)
-         ]
-         food = new_food if new_food not in snake else None
-      window.addch(food[0], food[1], curses.ACS_PI)
-    else:
+      new_food = [
+        random.randint(1, screen_height-1), # 200, 400
+        random.randint(1, screen_width-1)
+      ]
+      food = new_food if new_food not in snake else None
+    window.addch(food[0], food[1], curses.ACS_PI)
+  else:
   # otherwise remove the last segment of snake body
-      tall = snake.pop()
-      window.addch(tail[0], tall[1], ' ')
+    tail = snake.pop()
+    try:
+        window.addch(tail[0], tail[1], ' ')
+    except curses.error:
+        pass
 
+  try:
     window.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
-      
+  except curses.error:
+    pass
+
 # update the position of the snake on the screenld-a-Snake-Game-with-Python
